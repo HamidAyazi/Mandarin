@@ -1,0 +1,17 @@
+{
+  "name": "mandarin",
+  "version": "1.0.0",
+  "description": "A desktop pet app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "keywords": [],
+  "author": "Hamid",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^35.0.0"
+  }
+}

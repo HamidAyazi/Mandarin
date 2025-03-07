@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Desktop Pet</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevent scrollbars */
+            background: transparent; /* Make the background transparent */
+        }
+        #pet {
+            width: 100px;
+            height: 100px;
+            background-image: url('pet.png'); /* Default pet image */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="pet"></div>
+
+    <!-- Include the renderer script -->
+    <script src="renderer.js"></script>
+</body>
+</html>
