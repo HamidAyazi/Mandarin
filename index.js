@@ -1,3 +1,20 @@
+try {
+    require('electron-reloader')(module, {
+        debug: true, // Enable debug logs
+        watchRenderer: true, // Watch renderer files as well
+    });
+} catch (error) {
+    console.log('Hot reload not enabled:', error);
+}
+
+const path = require('path');
+const electronReload = require('electron-reload');
+
+// Enable hot reload for renderer files
+electronReload(path.join(__dirname, 'index.html'), {
+    electron: path.join(__dirname, 'node_modules', '.bin', 'electron'), // Path to Electron executable
+    hardResetMethod: 'exit', // Force restart the app on changes
+});
 const { app, BrowserWindow, ipcMain } = require("electron");
 
 let win;
