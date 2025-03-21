@@ -23,35 +23,44 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     let isDragging = false;
-    let lastX, lastY;
-    let dragInterval;
+    let lastX = 0, lastY = 0;
+    let currentX = 0, currentY = 0;
+    let animationFrameId = null;
 
-    // Start dragging and track mouse position
+    // Start dragging
     pet.addEventListener("mousedown", (event) => {
         isDragging = true;
         lastX = event.screenX;
         lastY = event.screenY;
         ipcRenderer.send("start-drag", lastX, lastY);
 
-        dragInterval = setInterval(() => {
-            if (isDragging) ipcRenderer.send("move-window", lastX, lastY);
-        }, 16); // 60 FPS
+        if (!animationFrameId) updatePosition();
     });
 
-    // Update mouse position while dragging
+    // Track mouse movement while dragging
     document.addEventListener("mousemove", (event) => {
         if (isDragging) {
-            lastX = event.screenX;
-            lastY = event.screenY;
+            currentX = event.screenX;
+            currentY = event.screenY;
         }
     });
 
-    // Stop dragging on mouse release or leave
+    // Function to update window position smoothly
+    function updatePosition() {
+        if (!isDragging) {
+            animationFrameId = null;
+            return;
+        }
+
+        ipcRenderer.send("move-window", currentX, currentY);
+        animationFrameId = requestAnimationFrame(updatePosition);
+    }
+
+    // Stop dragging on mouse release
     document.addEventListener("mouseup", () => stopDragging());
     document.addEventListener("mouseleave", () => stopDragging());
 
     function stopDragging() {
         isDragging = false;
-        clearInterval(dragInterval);
     }
 });
